@@ -11,16 +11,9 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 st.title('Focos por dia')
 date = st.date_input('Escolha o Dia de Análise dos Focos')
-#date = ''.join(str(date).split('-'))
 
-# URL do arquivo CSV
-#url = f"https://dataserver-coids.inpe.br/queimadas/queimadas/focos/csv/diario/Brasil/focos_diario_br_{date}.csv"
-#radius = st.number_input(label="Raio de cada ponto", min_value=0)
-#blur = st.number_input(label="Desfoque de cada ponto", min_value=0)
-
-radius = 10
-blur = 8
-# Criar DataFrame a partir do CSV
+radius = 2
+blur = 1
 
 @st.cache_data
 def load_date_csv(date):
@@ -39,7 +32,7 @@ longitude_media = df['lon'].mean()
 mapa = folium.Map(location=[latitude_media, longitude_media], zoom_start=4)
 
 heatmap_data = df[['lat', 'lon']].values
-HeatMap(heatmap_data).add_to(mapa)
+HeatMap(heatmap_data, radius=radius, blur=blur).add_to(mapa)
 
 
 st_folium(mapa)
