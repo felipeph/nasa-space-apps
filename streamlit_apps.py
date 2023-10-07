@@ -35,4 +35,4 @@ heatmap_data = df[['lat', 'lon']].values
 HeatMap(heatmap_data, radius=radius, blur=blur).add_to(mapa)
 
 
-st_folium(mapa)
+day_map = st_folium(fig=mapa, use_container_width=True)
